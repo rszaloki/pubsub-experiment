@@ -1,10 +1,7 @@
-
-const repo = () => {
-  return 'ipfs/pubsub-demo/' + Math.random()
-}
+import 'https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js'
 
 const ipfs = new window.Ipfs({
-  repo: repo(),
+  repo: 'ipfs/pubsub-demo',
   relay: {
     enabled: true, // enable relay dialer/listener (STOP)
     hop: {
@@ -23,7 +20,8 @@ const ipfs = new window.Ipfs({
   }
 })
 
-ipfs.on('ready', async () => {
+ipfs.once('ready', async () => {
   const id = await ipfs.id()
   console.log(id)
+  document.body.innerHTML = id.addresses.map(addr => `<li>${addr.toString()}</li>`)
 })
